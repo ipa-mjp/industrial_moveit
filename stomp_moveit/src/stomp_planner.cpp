@@ -164,9 +164,13 @@ bool StompPlanner::solve(planning_interface::MotionPlanResponse &res)
   ros::WallTime start_time = ros::WallTime::now();
   planning_interface::MotionPlanDetailedResponse detailed_res;
   bool success = solve(detailed_res);
-
-  // construct the compact response from the detailed one
-  res.trajectory_ = detailed_res.trajectory_.back();
+  if(success)
+  {
+    moveit_msgs::RobotTrajectory test;
+    detailed_res.trajectory_.back()->getRobotTrajectoryMsg(test);
+    // construct the compact response from the detailed one
+    res.trajectory_ = detailed_res.trajectory_.back();
+  }
   ros::WallDuration wd = ros::WallTime::now() - start_time;
   res.planning_time_ = ros::Duration(wd.sec, wd.nsec).toSec();
   res.error_code_ = detailed_res.error_code_;
@@ -268,6 +272,10 @@ bool StompPlanner::solve(planning_interface::MotionPlanDetailedResponse &res)
     }
 
     // creating request response
+    trajectory.header.seq=stomp_->getNumIterations(); //number of iterations
+    ROS_INFO_STREAM("Bruno this is your number of luck "<<trajectory.header.seq);
+    trajectory.points[0].effort.resize(trajectory.points[0].positions.size());
+    trajectory.points[0].effort[0]=stomp_->getNumIterations();
     moveit::core::RobotState robot_state(robot_model_);
     moveit::core::robotStateMsgToRobotState(request_.start_state,robot_state);
     res.trajectory_[0]= robot_trajectory::RobotTrajectoryPtr(new robot_trajectory::RobotTrajectory(
