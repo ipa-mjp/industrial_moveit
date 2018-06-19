@@ -129,7 +129,7 @@ namespace collision_detection
         {
           always_allow_collision = true;
           if (!cdata->req->verbose)
-            logDebug("Collision between '%s' and '%s' is always allowed. No contacts are computed.",
+            CONSOLE_BRIDGE_logDebug("Collision between '%s' and '%s' is always allowed. No contacts are computed.",
                      cd1->getID().c_str(), cd2->getID().c_str());
         }
       }
@@ -143,7 +143,7 @@ namespace collision_detection
       {
         always_allow_collision = true;
         if (!cdata->req->verbose)
-          logDebug("Robot link '%s' is allowed to touch attached object '%s'. No contacts are computed.",
+          CONSOLE_BRIDGE_logDebug("Robot link '%s' is allowed to touch attached object '%s'. No contacts are computed.",
                    cd1->getID().c_str(), cd2->getID().c_str());
       }
     }
@@ -156,7 +156,7 @@ namespace collision_detection
         {
           always_allow_collision = true;
           if (!cdata->req->verbose)
-            logDebug("Robot link '%s' is allowed to touch attached object '%s'. No contacts are computed.",
+            CONSOLE_BRIDGE_logDebug("Robot link '%s' is allowed to touch attached object '%s'. No contacts are computed.",
                      cd2->getID().c_str(), cd1->getID().c_str());
         }
       }
@@ -168,7 +168,7 @@ namespace collision_detection
     }
 
     if (!cdata->req->verbose)
-      logDebug("Actually checking collisions between %s and %s", cd1->getID().c_str(), cd2->getID().c_str());
+      CONSOLE_BRIDGE_logDebug("Actually checking collisions between %s and %s", cd1->getID().c_str(), cd2->getID().c_str());
 
 
     fcl::DistanceResult fcl_result;

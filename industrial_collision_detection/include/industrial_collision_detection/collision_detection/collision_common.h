@@ -36,6 +36,7 @@
 #include <fcl/collision.h>
 #include <fcl/distance.h>
 #include <set>
+#include <console_bridge/console.h>
 
 namespace collision_detection
 {
