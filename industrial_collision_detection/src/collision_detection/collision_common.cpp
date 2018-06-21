@@ -27,8 +27,10 @@
 #include <moveit/collision_detection_fcl/collision_common.h>
 #include <ros/ros.h>
 
-namespace collision_detection
+namespace industrial_collision_detection
 {
+using namespace collision_detection;
+
   bool getDistanceInfo(const DistanceMap &distance_detailed, DistanceInfoMap &distance_info_map)
   {
     Eigen::Affine3d tf;

@@ -42,8 +42,11 @@
 
 #include <industrial_collision_detection/collision_detection/collision_common.h>
 
-namespace collision_detection
+
+namespace industrial_collision_detection
 {
+using namespace collision_detection;
+
   typedef std::shared_ptr<fcl::CollisionObject> FCLCollisionObjectPtr;
   typedef std::shared_ptr<const fcl::CollisionObject> FCLCollisionObjectConstPtr;
 

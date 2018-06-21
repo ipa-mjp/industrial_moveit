@@ -22,7 +22,7 @@ find_package(catkin REQUIRED COMPONENTS
               dynamic_reconfigure
               tf_conversions
               cmake_modules
-              industrial_collision_detection)
+              #industrial_collision_detection)
 
 ## System dependencies are found with CMake's conventions
 find_package(orocos_kdl REQUIRED)

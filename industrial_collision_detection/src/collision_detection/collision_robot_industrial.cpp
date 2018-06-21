@@ -36,7 +36,7 @@
 
 #include <industrial_collision_detection/collision_detection/collision_robot_industrial.h>
 
-collision_detection::CollisionRobotIndustrial::CollisionRobotIndustrial(const robot_model::RobotModelConstPtr &model, double padding, double scale)
+industrial_collision_detection::CollisionRobotIndustrial::CollisionRobotIndustrial(const robot_model::RobotModelConstPtr &model, double padding, double scale)
   : CollisionRobot(model, padding, scale)
 {
   const std::vector<const robot_model::LinkModel*>& links = robot_model_->getLinkModelsWithCollisionGeometry();
@@ -64,13 +64,13 @@ collision_detection::CollisionRobotIndustrial::CollisionRobotIndustrial(const ro
     }
 }
 
-collision_detection::CollisionRobotIndustrial::CollisionRobotIndustrial(const CollisionRobotIndustrial &other) : CollisionRobot(other)
+industrial_collision_detection::CollisionRobotIndustrial::CollisionRobotIndustrial(const CollisionRobotIndustrial &other) : CollisionRobot(other)
 {
   geoms_ = other.geoms_;
   fcl_objs_ = other.fcl_objs_;
 }
 
-void collision_detection::CollisionRobotIndustrial::getAttachedBodyObjects(const robot_state::AttachedBody *ab, std::vector<FCLGeometryConstPtr> &geoms) const
+void industrial_collision_detection::CollisionRobotIndustrial::getAttachedBodyObjects(const robot_state::AttachedBody *ab, std::vector<FCLGeometryConstPtr> &geoms) const
 {
   const std::vector<shapes::ShapeConstPtr> &shapes = ab->getShapes();
   for (std::size_t i = 0 ; i < shapes.size() ; ++i)
@@ -81,7 +81,7 @@ void collision_detection::CollisionRobotIndustrial::getAttachedBodyObjects(const
   }
 }
 
-void collision_detection::CollisionRobotIndustrial::constructFCLObject(const robot_state::RobotState &state, FCLObject &fcl_obj) const
+void industrial_collision_detection::CollisionRobotIndustrial::constructFCLObject(const robot_state::RobotState &state, FCLObject &fcl_obj) const
 {
   fcl_obj.collision_objects_.reserve(geoms_.size());
   fcl::Transform3f tf;
@@ -116,7 +116,7 @@ void collision_detection::CollisionRobotIndustrial::constructFCLObject(const rob
   }
 }
 
-void collision_detection::CollisionRobotIndustrial::allocSelfCollisionBroadPhase(const robot_state::RobotState &state, FCLManager &manager) const
+void industrial_collision_detection::CollisionRobotIndustrial::allocSelfCollisionBroadPhase(const robot_state::RobotState &state, FCLManager &manager) const
 {
   fcl::DynamicAABBTreeCollisionManager* m = new fcl::DynamicAABBTreeCollisionManager();
   // m->tree_init_level = 2;
@@ -126,28 +126,28 @@ void collision_detection::CollisionRobotIndustrial::allocSelfCollisionBroadPhase
   // manager.manager_->update();
 }
 
-void collision_detection::CollisionRobotIndustrial::checkSelfCollision(const CollisionRequest &req, CollisionResult &res, const robot_state::RobotState &state) const
+void industrial_collision_detection::CollisionRobotIndustrial::checkSelfCollision(const CollisionRequest &req, CollisionResult &res, const robot_state::RobotState &state) const
 {
   checkSelfCollisionHelper(req, res, state, NULL);
 }
 
-void collision_detection::CollisionRobotIndustrial::checkSelfCollision(const CollisionRequest &req, CollisionResult &res, const robot_state::RobotState &state,
+void industrial_collision_detection::CollisionRobotIndustrial::checkSelfCollision(const CollisionRequest &req, CollisionResult &res, const robot_state::RobotState &state,
                                                                 const AllowedCollisionMatrix &acm) const
 {
   checkSelfCollisionHelper(req, res, state, &acm);
 }
 
-void collision_detection::CollisionRobotIndustrial::checkSelfCollision(const CollisionRequest &req, CollisionResult &res, const robot_state::RobotState &state1, const robot_state::RobotState &state2) const
+void industrial_collision_detection::CollisionRobotIndustrial::checkSelfCollision(const CollisionRequest &req, CollisionResult &res, const robot_state::RobotState &state1, const robot_state::RobotState &state2) const
 {
   logError("FCL continuous collision checking not yet implemented");
 }
 
-void collision_detection::CollisionRobotIndustrial::checkSelfCollision(const CollisionRequest &req, CollisionResult &res, const robot_state::RobotState &state1, const robot_state::RobotState &state2, const AllowedCollisionMatrix &acm) const
+void industrial_collision_detection::CollisionRobotIndustrial::checkSelfCollision(const CollisionRequest &req, CollisionResult &res, const robot_state::RobotState &state1, const robot_state::RobotState &state2, const AllowedCollisionMatrix &acm) const
 {
   logError("FCL continuous collision checking not yet implemented");
 }
 
-void collision_detection::CollisionRobotIndustrial::checkSelfCollisionHelper(const CollisionRequest &req, CollisionResult &res, const robot_state::RobotState &state,
+void industrial_collision_detection::CollisionRobotIndustrial::checkSelfCollisionHelper(const CollisionRequest &req, CollisionResult &res, const robot_state::RobotState &state,
                                                                              const AllowedCollisionMatrix *acm) const
 {
   FCLManager manager;
@@ -166,33 +166,33 @@ void collision_detection::CollisionRobotIndustrial::checkSelfCollisionHelper(con
   }
 }
 
-void collision_detection::CollisionRobotIndustrial::checkOtherCollision(const CollisionRequest &req, CollisionResult &res, const robot_state::RobotState &state,
+void industrial_collision_detection::CollisionRobotIndustrial::checkOtherCollision(const CollisionRequest &req, CollisionResult &res, const robot_state::RobotState &state,
                                                                  const CollisionRobot &other_robot, const robot_state::RobotState &other_state) const
 {
   checkOtherCollisionHelper(req, res, state, other_robot, other_state, NULL);
 }
 
-void collision_detection::CollisionRobotIndustrial::checkOtherCollision(const CollisionRequest &req, CollisionResult &res, const robot_state::RobotState &state,
+void industrial_collision_detection::CollisionRobotIndustrial::checkOtherCollision(const CollisionRequest &req, CollisionResult &res, const robot_state::RobotState &state,
                                                                  const CollisionRobot &other_robot, const robot_state::RobotState &other_state,
                                                                  const AllowedCollisionMatrix &acm) const
 {
   checkOtherCollisionHelper(req, res, state, other_robot, other_state, &acm);
 }
 
-void collision_detection::CollisionRobotIndustrial::checkOtherCollision(const CollisionRequest &req, CollisionResult &res, const robot_state::RobotState &state1, const robot_state::RobotState &state2,
+void industrial_collision_detection::CollisionRobotIndustrial::checkOtherCollision(const CollisionRequest &req, CollisionResult &res, const robot_state::RobotState &state1, const robot_state::RobotState &state2,
                                                                  const CollisionRobot &other_robot, const robot_state::RobotState &other_state1, const robot_state::RobotState &other_state2) const
 {
   logError("FCL continuous collision checking not yet implemented");
 }
 
-void collision_detection::CollisionRobotIndustrial::checkOtherCollision(const CollisionRequest &req, CollisionResult &res, const robot_state::RobotState &state1, const robot_state::RobotState &state2,
+void industrial_collision_detection::CollisionRobotIndustrial::checkOtherCollision(const CollisionRequest &req, CollisionResult &res, const robot_state::RobotState &state1, const robot_state::RobotState &state2,
                                                                  const CollisionRobot &other_robot, const robot_state::RobotState &other_state1, const robot_state::RobotState &other_state2,
                                                                  const AllowedCollisionMatrix &acm) const
 {
   logError("FCL continuous collision checking not yet implemented");
 }
 
-void collision_detection::CollisionRobotIndustrial::checkOtherCollisionHelper(const CollisionRequest &req, CollisionResult &res, const robot_state::RobotState &state,
+void industrial_collision_detection::CollisionRobotIndustrial::checkOtherCollisionHelper(const CollisionRequest &req, CollisionResult &res, const robot_state::RobotState &state,
                                                                        const CollisionRobot &other_robot, const robot_state::RobotState &other_state,
                                                                        const AllowedCollisionMatrix *acm) const
 {
@@ -211,7 +211,7 @@ void collision_detection::CollisionRobotIndustrial::checkOtherCollisionHelper(co
     res.distance = distanceOtherHelper(state, other_robot, other_state, acm);
 }
 
-void collision_detection::CollisionRobotIndustrial::updatedPaddingOrScaling(const std::vector<std::string> &links)
+void industrial_collision_detection::CollisionRobotIndustrial::updatedPaddingOrScaling(const std::vector<std::string> &links)
 {
   std::size_t index;
   for (std::size_t i = 0 ; i < links.size() ; ++i)
@@ -235,18 +235,18 @@ void collision_detection::CollisionRobotIndustrial::updatedPaddingOrScaling(cons
   }
 }
 
-double collision_detection::CollisionRobotIndustrial::distanceSelf(const robot_state::RobotState &state) const
+double industrial_collision_detection::CollisionRobotIndustrial::distanceSelf(const robot_state::RobotState &state) const
 {
   return distanceSelfHelper(state, NULL);
 }
 
-double collision_detection::CollisionRobotIndustrial::distanceSelf(const robot_state::RobotState &state,
+double industrial_collision_detection::CollisionRobotIndustrial::distanceSelf(const robot_state::RobotState &state,
                                                             const AllowedCollisionMatrix &acm) const
 {
   return distanceSelfHelper(state, &acm);
 }
 
-double collision_detection::CollisionRobotIndustrial::distanceSelfHelper(const robot_state::RobotState &state,
+double industrial_collision_detection::CollisionRobotIndustrial::distanceSelfHelper(const robot_state::RobotState &state,
                                                                   const AllowedCollisionMatrix *acm) const
 {
   FCLManager manager;
@@ -262,14 +262,14 @@ double collision_detection::CollisionRobotIndustrial::distanceSelfHelper(const r
   return res.distance;
 }
 
-double collision_detection::CollisionRobotIndustrial::distanceOther(const robot_state::RobotState &state,
+double industrial_collision_detection::CollisionRobotIndustrial::distanceOther(const robot_state::RobotState &state,
                                                              const CollisionRobot &other_robot,
                                                              const robot_state::RobotState &other_state) const
 {
   return distanceOtherHelper(state, other_robot, other_state, NULL);
 }
 
-double collision_detection::CollisionRobotIndustrial::distanceOther(const robot_state::RobotState &state,
+double industrial_collision_detection::CollisionRobotIndustrial::distanceOther(const robot_state::RobotState &state,
                                                              const CollisionRobot &other_robot,
                                                              const robot_state::RobotState &other_state,
                                                              const AllowedCollisionMatrix &acm) const
@@ -277,7 +277,7 @@ double collision_detection::CollisionRobotIndustrial::distanceOther(const robot_
   return distanceOtherHelper(state, other_robot, other_state, &acm);
 }
 
-double collision_detection::CollisionRobotIndustrial::distanceOtherHelper(const robot_state::RobotState &state,
+double industrial_collision_detection::CollisionRobotIndustrial::distanceOtherHelper(const robot_state::RobotState &state,
                                                                    const CollisionRobot &other_robot,
                                                                    const robot_state::RobotState &other_state,
                                                                    const AllowedCollisionMatrix *acm) const
@@ -300,12 +300,12 @@ double collision_detection::CollisionRobotIndustrial::distanceOtherHelper(const 
 }
 
 
-void collision_detection::CollisionRobotIndustrial::distanceSelf(const DistanceRequest &req, DistanceResult &res, const robot_state::RobotState &state) const
+void industrial_collision_detection::CollisionRobotIndustrial::distanceSelf(const DistanceRequest &req, DistanceResult &res, const robot_state::RobotState &state) const
 {
   distanceSelfHelper(req, res, state);
 }
 
-void collision_detection::CollisionRobotIndustrial::distanceSelfHelper(const DistanceRequest &req, DistanceResult &res, const robot_state::RobotState &state) const
+void industrial_collision_detection::CollisionRobotIndustrial::distanceSelfHelper(const DistanceRequest &req, DistanceResult &res, const robot_state::RobotState &state) const
 {
   FCLManager manager;
   allocSelfCollisionBroadPhase(state, manager);

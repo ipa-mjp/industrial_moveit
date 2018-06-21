@@ -38,10 +38,8 @@
 #include <set>
 #include <console_bridge/console.h>
 
-namespace collision_detection
+namespace industrial_collision_detection
 {
-
-
   struct DistanceRequest
   {
     DistanceRequest(): detailed(false),

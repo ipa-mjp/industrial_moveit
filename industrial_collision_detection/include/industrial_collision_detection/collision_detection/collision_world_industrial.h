@@ -41,9 +41,9 @@
 #include <fcl/broadphase/broadphase.h>
 #include <boost/scoped_ptr.hpp>
 
-namespace collision_detection
+namespace industrial_collision_detection
 {
-
+using namespace collision_detection;
   class CollisionWorldIndustrial : public CollisionWorld
   {
   public:

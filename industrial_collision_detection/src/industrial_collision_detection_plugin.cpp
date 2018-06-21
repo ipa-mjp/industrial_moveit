@@ -26,8 +26,8 @@
 #include <industrial_collision_detection/industrial_collision_detection_plugin.h>
 #include <pluginlib/class_list_macros.h>
 
-
-namespace collision_detection
+using collision_detection;
+namespace industrial_collision_detection
 {
 
   const std::string CollisionDetectorAllocatorIndustrial::NAME_ = "IndustrialFCL";

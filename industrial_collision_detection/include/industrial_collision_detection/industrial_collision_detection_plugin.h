@@ -30,8 +30,8 @@
 #include <industrial_collision_detection/collision_detection/collision_robot_industrial.h>
 #include <industrial_collision_detection/collision_detection/collision_world_industrial.h>
 
-
-namespace collision_detection
+using ::collision_detection;
+namespace industrial_collision_detection
 {
   /** @brief An allocator for Industrial Moveit FCL collision detectors */
   class CollisionDetectorAllocatorIndustrial :
